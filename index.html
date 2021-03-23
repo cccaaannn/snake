@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="src/css/styles.css">
+    <title>Snake</title>
+</head>
+<body>
+
+    <div id="container">
+        <h1 id="score"></h1>
+        <canvas id="canvas"></canvas>
+
+        <div id="menu">
+            <br><label for="sound">Sound:</label>
+            <input type="checkbox" id="sound" name="sound" value="sound" checked>-
+
+            <label for="fps">Difficulty</label>
+            <select name="fps" id="fps">
+                <option value='{"FPS":1, "slowDownFPS":1}'>snail</option>
+                <option value='{"FPS":5, "slowDownFPS":3}'>easy</option>
+                <option value='{"FPS":10, "slowDownFPS":7}' selected>normal</option>
+                <option value='{"FPS":15, "slowDownFPS":7}'>hard</option>
+                <option value='{"FPS":25, "slowDownFPS":10}'>extreme</option>
+                <option value='{"FPS":100, "slowDownFPS":10}'>I AM SPEED</option>
+            </select>
+        </div>
+    </div>
+
+    <script src="src/js/Snake.js"></script>
+    <script src="src/js/Food.js"></script>
+    <script src="src/js/Sound.js"></script>
+    <script src="src/js/Game.js"></script>
+</body>
+</html>
