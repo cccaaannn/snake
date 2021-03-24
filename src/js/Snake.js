@@ -8,7 +8,7 @@ class tailNode{
 
 
 class Snake{
-    constructor({canvas, scale=15, length=0, headColor="#5cb85c", tailColor="#5cb85c", isHeadFilled=true, isTailFilled=false}){
+    constructor({canvas, scale=15, length=0, headColor="#5cb85c", tailColor="#5cb85c", godModeColor="#ffd900", isHeadFilled=true, isTailFilled=false}){
         // head
         this.head = {
             x: 0,
@@ -17,17 +17,25 @@ class Snake{
             preY: 0,
         }
         this.direction = Snake.RIGHT;
-
-
+        
         // tail
         this.tail = [];
         this.length = 0;
-
+        
         // customization
         this.scale = scale;
         this.speed = this.scale;
-        this.color = {head:headColor, tail:tailColor};
+        this.color = {head:headColor, tail:tailColor, headTemp:headColor, tailTemp:tailColor, godMode:godModeColor};
         this.isFilled = {head:isHeadFilled, tail:isTailFilled}
+
+        // bonusFood
+        this.bonusFoodPoints = 0;
+
+        //utility
+        this.maxPossibleLength = Math.floor((canvas.width*canvas.height) / (this.scale*this.scale)) - 1;
+
+        // extras
+        this.godMode = false;
 
         // canvas
         this.ctx = canvas.getContext("2d");
@@ -36,14 +44,19 @@ class Snake{
         this.initSnake(length);
     }
 
-    // static directions
+
+
+    // ---------- static directions ----------
     static UP = "up";
     static DOWN = "down";
     static RIGHT = "right";
     static LEFT = "left";
+    // ---------- ---------- ----------
 
 
-   initSnake(length){
+
+    // ---------- get - set ----------
+    initSnake(length){
         // init snake with selected length
         for (let i = 0; i < length; i++) {
             this.addTailNode();
@@ -57,14 +70,39 @@ class Snake{
     }
 
     resetSnake(){
+        this.bonusFoodPoints = 0;
         this.length = 0;
-        this.tail = [];          
+        this.tail = [];
     }
 
+    getLength(){
+        return this.length
+    }
 
+    getMaxPossibleLength(){
+        return this.maxPossibleLength
+    }
+
+    getScore(){
+        return this.length + this.bonusFoodPoints;
+    }
+
+    isWin(){
+        // returns 1 if maximum possible snake size is reached
+        if((this.maxPossibleLength - this.length) <= 0){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    // ---------- ---------- ----------
+
+
+
+    // ---------- collisions ----------
     checkFoodCollision(food){
         // checks food collision
-
         if (this.head.x === food.x && this.head.y === food.y) {
             this.addTailNode();
             return true;
@@ -72,7 +110,17 @@ class Snake{
         return false;
     }
 
-    checkFoodSpawn(food){
+    checkBonusFoodCollision(bonusFood, bonusFoodTimeRemain){
+        // checks bonusFood collision
+        if (this.head.x === bonusFood.x && this.head.y === bonusFood.y) {
+            this.addTailNode();
+            this.bonusFoodPoints += bonusFoodTimeRemain - 1;
+            return true;
+        }
+        return false;
+    }
+
+    checkItemSpawn(food){
         // check for food spawn to prevent spawning inside the snake
 
         if (this.head.x === food.x && this.head.y === food.y) {
@@ -89,6 +137,10 @@ class Snake{
 
     checkSelfCollision(){
         // checks self collision
+        if(this.godMode){
+            return false
+        }
+
         for (var i = 0 ; i < this.tail.length; i++) {
             if (this.head.x === this.tail[i].x && this.head.y === this.tail[i].y) {
                 return true;
@@ -99,6 +151,10 @@ class Snake{
 
     checkPreSelfCollision(){
         // checks self collision with PRE HEAD (for slowing the game down)
+        if(this.godMode){
+            return false
+        }
+        
         for (var i = 0 ; i < this.tail.length; i++) {
             if (this.head.preX === this.tail[i].x && this.head.preY === this.tail[i].y) {
                 return true;
@@ -106,7 +162,29 @@ class Snake{
         }
         return false;
     }
+    // ---------- ---------- ----------
 
+
+
+    // ---------- extras ----------
+    toggleGodMode(){
+        // toggles invincibility
+        if(this.godMode){
+            this.godMode = false;
+            this.color.head = this.color.headTemp;
+            this.color.tail = this.color.tailTemp;
+        }
+        else{
+            this.color.head = this.color.godMode;
+            this.color.tail = this.color.godMode;
+            this.godMode = true;
+        }
+    }
+    // ---------- ---------- ----------
+
+
+
+    // ---------- directions ----------
     changeDirection(direction){
         // changes snakes direction by checking if the direction is valid
         // returns true if the direction is valid
@@ -152,8 +230,11 @@ class Snake{
             return false;
         }
     }
+    // ---------- ---------- ----------
 
 
+
+    // ---------- draw and update ----------
     draw(){
         // draw head
         this.ctx.beginPath();
@@ -179,6 +260,7 @@ class Snake{
         }
         this.ctx.closePath();
 
+        // debug pre head
         // this.ctx.beginPath();
         // this.ctx.strokeStyle = this.color.head;
         // this.ctx.fillStyle = this.color.head;
@@ -186,7 +268,6 @@ class Snake{
         // this.ctx.stroke();
         // this.ctx.closePath();
     }
-    
 
     update(){
         // update snake and tails location before drawing
@@ -234,8 +315,7 @@ class Snake{
         	this.head.x = 0;
         }
         else if(this.head.x < 0 && this.direction === Snake.LEFT){
-        	this.head.x = canvas.width - this.scale;  //tp to right - width of cube
-            
+        	this.head.x = canvas.width - this.scale;  //tp to right - width of cube 
         }
         else if(this.head.y + this.scale > canvas.height && this.direction === Snake.DOWN){
         	this.head.y = 0;
@@ -250,8 +330,7 @@ class Snake{
         	this.head.preX = 0;
         }
         else if(this.head.preX < 0 && this.direction === Snake.LEFT){
-        	this.head.preX = canvas.width - this.scale;  //tp to right - width of cube
-            
+        	this.head.preX = canvas.width - this.scale;  //tp to right - width of cube      
         }
         else if(this.head.preY + this.scale > canvas.height && this.direction === Snake.DOWN){
         	this.head.preY = 0;
@@ -264,5 +343,6 @@ class Snake{
         // draw after each update
         this.draw();
     }
+    // ---------- ---------- ----------
 
 }
