@@ -11,19 +11,20 @@
 <body>
 
     <div id="container">
+
         <h1 id="score"></h1>
+        <h5 id="lengthScore"></h5>
         <canvas id="canvas"></canvas>
 
         <div id="menu">
-            <br><label for="sound">Sound:</label>
-            <input type="checkbox" id="sound" name="sound" value="sound" checked>-
+            <label for="sound">Sound:</label><input type="checkbox" id="sound" name="sound" value="sound" checked>-
 
-            <label for="fps">Difficulty</label>
+            <label for="fps">Difficulty:</label>
             <select name="fps" id="fps">
                 <option value='{"FPS":1, "slowDownFPS":1}'>snail</option>
                 <option value='{"FPS":5, "slowDownFPS":3}'>easy</option>
-                <option value='{"FPS":10, "slowDownFPS":7}' selected>normal</option>
-                <option value='{"FPS":15, "slowDownFPS":7}'>hard</option>
+                <option value='{"FPS":10, "slowDownFPS":8}' selected>normal</option>
+                <option value='{"FPS":15, "slowDownFPS":9}'>hard</option>
                 <option value='{"FPS":25, "slowDownFPS":10}'>extreme</option>
                 <option value='{"FPS":100, "slowDownFPS":10}'>I AM SPEED</option>
             </select>
@@ -32,6 +33,7 @@
 
     <script src="src/js/Snake.js"></script>
     <script src="src/js/Food.js"></script>
+    <script src="src/js/BonusFood.js"></script>
     <script src="src/js/Sound.js"></script>
     <script src="src/js/Game.js"></script>
 </body>
