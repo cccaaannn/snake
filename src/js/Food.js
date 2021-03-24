@@ -9,12 +9,19 @@ class Food{
         this.color = color;
         this.isFilled = isFilled;
 
+        // utility
+        this.foodCounter = 0;
+
         // canvas
         this.ctx = canvas.getContext("2d");
         this.width = canvas.width / this.scale;
         this.height = canvas.height / this.scale;
 
-        this.getRandomPosition(); // start food spawn
+        this.getRandomPosition(); // spawn food at start 
+    }
+
+    resetFood(){
+        this.foodCounter = 0;
     }
 
     getRandomPosition(){
