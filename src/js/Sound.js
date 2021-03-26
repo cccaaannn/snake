@@ -1,5 +1,5 @@
 class Sound{
-    constructor(playStartSound){
+    constructor(){
         this.eat = new Audio('src/sounds/eatSound.wav');
         this.death = new Audio('src/sounds/deathSound.wav');
         this.highScore = new Audio('src/sounds/highScoreSound.wav');
@@ -10,10 +10,6 @@ class Sound{
 
         this.soundOn = true;
         this.playHighScoreSound = true;
-
-        if(playStartSound){
-            this.play(Sound.START); // play start
-        }
     }
 
     static EAT = "eat";

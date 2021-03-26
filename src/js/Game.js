@@ -1,15 +1,19 @@
 // html elements
 const fpsSelector = document.getElementById('fps');
 const soundBox = document.getElementById('sound');
+const startButton = document.getElementById('startButton');
 const lengthScoreDiv = document.getElementById('lengthScore');
 const scoreDiv = document.getElementById('score');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext("2d");
 
 // add listeners
+document.addEventListener("DOMContentLoaded", init);
 document.addEventListener("keydown", keydownEvent);
 fpsSelector.addEventListener("change", changeFPS);
 soundBox.addEventListener("change", soundToggle);
+startButton.addEventListener("click", start);
+
 
 // game variables
 let FPS = JSON.parse(fpsSelector.value).FPS;
@@ -34,7 +38,7 @@ let preCollision = false;
 let snake = new Snake({canvas:canvas});
 let food = new Food({canvas:canvas});
 let bonusFood = new BonusFood({canvas:canvas});
-let sound = new Sound(true);
+let sound = new Sound();
 
 
 // ---------- event listeners ----------
@@ -81,6 +85,20 @@ function changeFPS(){
 	FPS = fpsSelector.value;
 	sound.play(Sound.MENU_EFFECT);
 	fpsSelector.blur();
+}
+
+
+function init(){
+	updateScores();
+}
+
+function start(){
+	canvas.style.display="block";
+	startButton.style.display="none";
+	startButton.blur();
+
+	sound.play(Sound.START);
+	gameLoop();
 }
 // ---------- ---------- ----------
 
@@ -203,7 +221,7 @@ function gameLoop(){
 	if(food.foodCounter === bonusFood.spawnBonusFoodAfter){
 		// play spawn sound
 		sound.play(Sound.BONUS_FOOD_SPAWN);
-
+		
 		// start an initial random position
 		bonusFood.getRandomPosition(); 
 
@@ -245,4 +263,4 @@ function gameLoop(){
 
 
 
-gameLoop();
+

@@ -1,12 +1,12 @@
 body {
     background-color: #3c3c3c;
     color: white;
-} 
+}
 
 select {
-    border-color: white;
     background: #3c3c3c;
     color: white;
+    border-color: white;
 }
 
 #container{
@@ -21,21 +21,39 @@ select {
     transform: translate(-50%, -50%);
     position: absolute;
 
-    width: 1000px;
+    width: 1008px;
     height: 35px;
+}
+
+#canvas {
+    border: 4px solid #568bff;
+    width: 1000px;
+    height: 500px;
+    display:none;
 }
 
 #lengthScore {
     margin-top: -1.5%;
 }
 
-#canvas {
-    border: 2px solid #0073c0b9;
-    width: 1000px;
-    height: 500px;
-}
-
 #menu{
+    margin-top: 1%;
     text-align: right;
     right: 0%;
+}
+
+#startButton {
+    background: #3c3c3c;
+    color: white;
+    border: 4px solid #568bff;
+    width: 1008px; /* yes it is 1008*/
+    height: 500px;
+    font-size: 3em;
+
+}
+
+#startButton:hover {
+    background: #ffffff10;
+    color: #5cb85c;
+    border: 4px solid #5cb85c;
 }
