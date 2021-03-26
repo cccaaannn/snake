@@ -1,5 +1,5 @@
 class BonusFood{
-    constructor({canvas, scale=15, color="#0073c0", textColor="white", isFilled=true, spawnBonusFoodAfter=5, bonusFoodDeSpawnTime=4}){
+    constructor({canvas, scale=15, color="#a200ff", textColor="white", isFilled=true, spawnBonusFoodAfter=5, bonusFoodDeSpawnTime=4}){
         // coordinates
         this.x;
         this.y;
