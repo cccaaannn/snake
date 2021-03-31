@@ -23,7 +23,6 @@ body {
 
 #canvas {
     box-shadow: 0 0 7px #000000, 0 0 35px #568bff;
-    border-radius: 0.5%;
     border: 0px;
     width: 1000px;
     height: 500px;
@@ -64,7 +63,6 @@ input[type=checkbox] {
     background: #3c3c3c;
     color: white;
     border: 0px;
-    border-radius: 0.5%;
     box-shadow: 0 0 7px #000000, 0 0 35px #568bff;
     width: 1000px;
     height: 500px;

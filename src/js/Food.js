@@ -1,5 +1,5 @@
 class Food{
-    constructor({canvas, scale=15, color="#ff004c", isFilled=true}){
+    constructor({canvas, scale=60, color="#ff004c", isFilled=true}){
         // coordinates
         this.x;
         this.y;

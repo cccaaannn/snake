@@ -8,7 +8,7 @@ class tailNode{
 
 
 class Snake{
-    constructor({canvas, scale=15, length=0, headColor="#5cb85c", tailColor="#5cb85c", godModeColor="#ffd900", isHeadFilled=true, isTailFilled=false}){
+    constructor({canvas, scale=60, length=0, headColor="#5cb85c", tailColor="#5cb85c", godModeColor="#ffd900", isHeadFilled=true, isTailFilled=false}){
         // head
         this.head = {
             x: 0,

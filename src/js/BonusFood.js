@@ -1,5 +1,5 @@
 class BonusFood{
-    constructor({canvas, scale=15, color="#568bff", textColor="white", isFilled=true, spawnBonusFoodAfter=5, bonusFoodDeSpawnTime=4}){
+    constructor({canvas, scale=60, color="#568bff", textColor="white", isFilled=true, spawnBonusFoodAfter=5, bonusFoodDeSpawnTime=4}){
         // coordinates
         this.x;
         this.y;
@@ -46,7 +46,7 @@ class BonusFood{
         this.ctx.beginPath();
         this.ctx.strokeStyle = this.color.textColor;
         this.ctx.font = `${this.scale}px arial`;
-        this.ctx.strokeText(countDown, this.x + (this.scale/5), this.y + this.scale - 2);
+        this.ctx.strokeText(countDown, this.x + (this.scale/5), this.y + (this.scale - 7));  // place the number to the center
         this.ctx.closePath();
     }
 

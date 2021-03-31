@@ -15,6 +15,10 @@ soundBox.addEventListener("change", soundToggle);
 saveGameBox.addEventListener("change", saveGameToggle);
 startButton.addEventListener("click", start);
 
+// set canvas size
+canvas.width = 1200; 
+canvas.height = 600;
+
 // game variables
 let FPS = JSON.parse(fpsSelector.value).FPS;
 let fpsTimer = 0;
@@ -239,7 +243,7 @@ function gameLoop(){
 	preCollision = snake.checkPreSelfCollision();																	// check pre collision to slow down the game
 
 	if(snake.checkSelfCollision()){																					// check self collision
-		resetGameOn(DEATH);																							// reset game on win
+		resetGameOn(DEATH);																							// reset game on death
 	}
 
 
