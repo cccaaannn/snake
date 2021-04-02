@@ -111,7 +111,7 @@ function start(){
 	document.addEventListener("keydown", keydownEvent);
 	
 	sound.play(Sound.START);
-	// registerServiceWorker();
+	registerServiceWorker();
 	gameLoop();
 }
 // ---------- ---------- ----------
@@ -209,6 +209,18 @@ function saveGameToggle(){
 // ---------- ---------- ----------
 
 
+// ---------- pwa ----------
+function registerServiceWorker(){
+    if("serviceWorker" in navigator){
+        navigator.serviceWorker.register("sw.js").then(registration => {
+
+        }).catch(error => {
+            console.log("service worker can not registered");
+            console.log(error);
+        })
+    }
+}
+// ---------- ---------- ----------
 
 
 
