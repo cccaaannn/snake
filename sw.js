@@ -35,63 +35,36 @@ const staticAssets = [
 
 
 self.addEventListener("install", e => {
-    const cache = cacheAssets(e);
-    return cache;
-});
-
-// self.addEventListener("fetch", e => {
-//     e.respondWith(
-//         caches.match(e.request).then(async (cachedData) => {
-
-//             // try fetching new site data and if it is fetched cache it
-//             try{
-//                 const newFetched = await fetch(e.request);
-//                 cacheAssets(e);
-//                 return newFetched;
-//             }
-//             // if fetch fails, use cached data
-//             catch{
-//                 return cachedData;
-//             }
-
-//         })
-        
-//     );
-
-// });
-
-
-
-self.addEventListener('fetch', e => {
-    e.respondWith(caches.match(e.request)
-    .then(cachedData => {
-        return fetch(e.request)
-        .then(resp => {
-            return caches.open(cacheName)
-            .then(cache => {
-                cache.put(e.request, resp.clone());
-                return resp;
-        })
-        }).catch(err => {
-            return cachedData;
-        })
-    }));
-  });
-
-
-
-
-
-
-
-function cacheAssets(e){
     // waits until cache is completed and returns the cached assets
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
             return cache.addAll(staticAssets);
         })
     );
-}
+});
 
+self.addEventListener("fetch", e => {
+    e.respondWith(
+        caches.match(e.request).then(async (cachedData) => {
 
+            // try fetching new site data and if it is fetched cache it
+            try{
+                const newFetched = await fetch(e.request);
+                
+                const cache = await caches.open(cacheName)
+
+                await cache.put(e.request, newFetched.clone());
+
+                return newFetched;
+            }
+            // if fetch fails, use cached data
+            catch{
+                return cachedData;
+            }
+
+        })
+        
+    );
+
+});
 
