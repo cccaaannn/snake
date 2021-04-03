@@ -100,6 +100,7 @@ function changeFPS(){
 function init(){
 	loadGame();
 	updateScores();
+	registerServiceWorker();
 }
 
 function start(){
@@ -111,7 +112,6 @@ function start(){
 	document.addEventListener("keydown", keydownEvent);
 	
 	sound.play(Sound.START);
-	registerServiceWorker();
 	gameLoop();
 }
 // ---------- ---------- ----------
