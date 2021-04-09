@@ -100,7 +100,7 @@ function changeFPS(){
 function init(){
 	loadGame();
 	updateScores();
-	registerServiceWorker();
+	// registerServiceWorker();
 }
 
 function start(){
