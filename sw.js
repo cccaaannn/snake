@@ -33,29 +33,31 @@ const staticAssets = [
     "./manifest.json"
 ]
 
-
-self.addEventListener("install", e => {
+self.addEventListener("install", event => {
     // waits until cache is completed and returns the cached assets
-    e.waitUntil(
-        caches.open(cacheName).then((cache) => {
-            return cache.addAll(staticAssets);
+    event.waitUntil(
+        caches.open(cacheName).then(cache => {
+            return cache.addAll(staticAssets)
         })
     );
 });
 
-self.addEventListener("fetch", e => {
-    e.respondWith(
-        caches.match(e.request).then(async (cachedData) => {
+self.addEventListener("fetch", event => {
+    event.respondWith(
+        caches.match(event.request).then(async (cachedData) => {
 
             // try fetching new site data and if it is fetched cache it
             try{
-                const newFetched = await fetch(e.request);
-                
-                const cache = await caches.open(cacheName)
+                const newFetched = await fetch(event.request);
+                if(newFetched.status === 200){
+                    const cache = await caches.open(cacheName)
+                    await cache.put(event.request, newFetched.clone());
+                    return newFetched;
+                }
+                else{
+                    return cachedData;
+                }
 
-                await cache.put(e.request, newFetched.clone());
-
-                return newFetched;
             }
             // if fetch fails, use cached data
             catch{
